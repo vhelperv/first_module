@@ -2,10 +2,16 @@
 
 namespace Drupal\helper\Controller;
 
-class HelperController {
-  public function message() {
+use Drupal\Core\Controller\ControllerBase;
+
+class HelperController extends ControllerBase {
+  public function cats_title (){
+    $content = [];
+
+    $content['title'] = 'Hello! You can add here a photo of your cat.';
     return [
-      '#markup' => 'Hello! You can add here a photo of your cat.'
+      '#theme' => 'cats',
+      '#content' => $content,
     ];
   }
 }

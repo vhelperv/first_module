@@ -1,7 +1,7 @@
-helper.hellomsg:
+helper.cats:
   path: '/helper/cats'
   defaults:
-    _controller: 'Drupal\helper\Controller\HelperController::message'
+    _controller: 'Drupal\helper\Controller\HelperController::cats_title'
     _title: 'Hello! You can add here a photo of your cat.'
   requirements:
     _permission: 'access content'

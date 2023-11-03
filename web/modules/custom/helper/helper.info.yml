@@ -1,6 +1,6 @@
 name: helper
+description: This module creates a page with a list of cats and a form where users can leave photos of their pets.
+package: CustomModules
+
 type: module
-description: 'This module creates a page with a list of cats and a form where users can leave photos of their pets.'
-package: custom
-version: 1.0
 core_version_requirement: ^9

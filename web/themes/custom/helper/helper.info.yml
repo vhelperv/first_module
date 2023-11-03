@@ -1,0 +1,15 @@
+name: 'helper'
+distribution: "Custom Theme"
+type: theme
+core_version_requirement: ^9
+base theme: gin
+
+libraries:
+  - helper/global
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  highlighted: Highlighted
+  content: Content
+  footer: Footer

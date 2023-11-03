@@ -8,6 +8,7 @@
 /web/libraries/
 /.docksal/
 /database.sql
+/web/themes/custom/helper/node_modules
 
 # Ignore local settings
 /web/sites/*/settings.local.php
