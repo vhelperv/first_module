@@ -27,6 +27,12 @@ class HelperFormGetNameCat extends FormBase
       '#required' => TRUE,
       '#description' => $this->t('The name must be between 2 and 32 characters long.'),
     );
+    $form['user-email'] = array(
+      '#type' => 'email',
+      '#title' => $this->t('Your email:'),
+      '#required' => TRUE,
+      '#description' => $this->t('The email address can only contain Latin letters, the underscore character (_), or the hyphen character (-).'),
+    );
 
     $form['actions']['#type'] = 'actions';
     $form['submit'] = array(

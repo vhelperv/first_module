@@ -39,13 +39,11 @@ class __TwigTemplate_7c424742a1c53c21f8c9c59c012fd8a8 extends \Twig\Template
         echo "<div class=\"cat\">
     <div class=\"cat__add\">
       <form class=\"cat-form\">
-        <div class=\"cat-form__cats-name\"> ";
+        ";
         // line 4
         echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["form"] ?? null), 4, $this->source), "html", null, true);
-        echo " </div>
-";
-        // line 7
-        echo "      </form>
+        echo "
+      </form>
     </div>
 </div>
 ";
@@ -63,7 +61,7 @@ class __TwigTemplate_7c424742a1c53c21f8c9c59c012fd8a8 extends \Twig\Template
 
     public function getDebugInfo()
     {
-        return array (  48 => 7,  44 => 4,  39 => 1,);
+        return array (  44 => 4,  39 => 1,);
     }
 
     public function getSourceContext()
