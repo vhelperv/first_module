@@ -18,18 +18,18 @@ class HelperFormGetNameCat extends FormBase
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state): array
-  {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['cat-name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Your cat’s name:'),
+      '#title' => $this->t('Your cat’s name:'),
       '#required' => TRUE,
+      '#description' => $this->t('The name must be between 2 and 32 characters long.'),
     );
 
     $form['actions']['#type'] = 'actions';
     $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Add cat'),
+      '#value' => $this->t('Add cat'),
     );
     return $form;
   }
