@@ -3,7 +3,10 @@
 function helper_theme($existing, $type, $theme, $path) {
   return [
     'cats' => [
-      'variables' => ['content' => NULL]
-    ]
+      'variables' => [
+        'content' => NULL,
+        'form' => [],
+      ],
+    ],
   ];
 }
