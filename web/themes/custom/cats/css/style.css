@@ -1,0 +1,9 @@
+.cat-form #email-field-wrapper {
+  position: relative; }
+
+.cat-form #email-error-message {
+  position: absolute;
+  left: 42%;
+  top: 35%; }
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk1lc3NhZ2UvZXJyb3ItbWVzc2FnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBRUksa0JBQWtCLEVBQUE7O0FBRnRCO0VBS0ksa0JBQWtCO0VBQ2xCLFNBQVM7RUFDVCxRQUFRLEVBQUEiLCJmaWxlIjoic3R5bGUuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNhdC1mb3JtIHtcbiAgI2VtYWlsLWZpZWxkLXdyYXBwZXIge1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgfVxuICAjZW1haWwtZXJyb3ItbWVzc2FnZSB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIGxlZnQ6IDQyJTtcbiAgICB0b3A6IDM1JTtcbiAgfVxufVxuIl19 */

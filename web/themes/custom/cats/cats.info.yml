@@ -1,11 +1,11 @@
-name: 'helper'
+name: "cats"
 distribution: "Custom Theme"
 type: theme
 core_version_requirement: ^9
 base theme: gin
 
 libraries:
-  - helper/global
+  - cats/global
 
 regions:
   header: Header

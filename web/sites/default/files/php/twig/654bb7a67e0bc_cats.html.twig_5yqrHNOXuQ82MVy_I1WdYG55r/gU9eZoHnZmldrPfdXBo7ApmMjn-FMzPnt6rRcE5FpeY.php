@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* themes/custom/helper/templates/cats.html.twig */
-class __TwigTemplate_7c424742a1c53c21f8c9c59c012fd8a8 extends \Twig\Template
+/* modules/custom/helper/templates/cats.html.twig */
+class __TwigTemplate_de9c01d6941d7581cda6628aeb7f782b extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -36,22 +36,25 @@ class __TwigTemplate_7c424742a1c53c21f8c9c59c012fd8a8 extends \Twig\Template
     {
         $macros = $this->macros;
         // line 1
-        echo "<div class=\"cat\">
-    <div class=\"cat__add\">
-      <form class=\"cat-form\">
-        ";
-        // line 4
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["form"] ?? null), 4, $this->source), "html", null, true);
+        echo "<div>";
+        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, ($context["page"] ?? null), "title", [], "any", false, false, true, 1), 1, $this->source), "html", null, true);
+        echo "</div>
+<div class=\"cat\">
+  <div class=\"cat__add\">
+    <form class=\"cat-form\">
+      ";
+        // line 5
+        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["form"] ?? null), 5, $this->source), "html", null, true);
         echo "
-      </form>
-    </div>
+    </form>
+  </div>
 </div>
 ";
     }
 
     public function getTemplateName()
     {
-        return "themes/custom/helper/templates/cats.html.twig";
+        return "modules/custom/helper/templates/cats.html.twig";
     }
 
     public function isTraitable()
@@ -61,18 +64,18 @@ class __TwigTemplate_7c424742a1c53c21f8c9c59c012fd8a8 extends \Twig\Template
 
     public function getDebugInfo()
     {
-        return array (  44 => 4,  39 => 1,);
+        return array (  47 => 5,  39 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("", "themes/custom/helper/templates/cats.html.twig", "/var/www/web/themes/custom/helper/templates/cats.html.twig");
+        return new Source("", "modules/custom/helper/templates/cats.html.twig", "/var/www/web/modules/custom/helper/templates/cats.html.twig");
     }
     
     public function checkSecurity()
     {
         static $tags = array();
-        static $filters = array("escape" => 4);
+        static $filters = array("escape" => 1);
         static $functions = array();
 
         try {
