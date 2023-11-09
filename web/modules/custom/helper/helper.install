@@ -1,0 +1,71 @@
+<?php
+/**
+ * Implements hook_schema().
+ */
+use Drupal\Core\Database\Database;
+
+function helper_schema() {
+  $schema['helper'] = [
+    'description' => 'Table for storing data from the form',
+    'fields' => [
+      'id' => [
+        'description' => 'Holds the id',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'cat_name' => [
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'description' => 'Cat name from the form.',
+      ],
+      'user_email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Email from the form.',
+      ],
+      'cats_image_id' => [
+        'type' => 'int',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Img ID from the form.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Timestamp of when the record was created.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}
+
+function helper_install() {
+  Database::getConnection()->insert('helper')
+    ->fields([
+      'id' => 0,
+      'cat_name' => '',
+      'user_email' => '',
+      'cats_image_id' => 0,
+      'created' => 0,
+    ])
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function helper_uninstall() {
+  \Drupal::state()->delete('helper');
+}
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function helper_update_last_removed() {
+  return 8700;
+}

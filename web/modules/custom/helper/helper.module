@@ -1,5 +1,4 @@
 <?php
-
 function helper_theme($existing, $type, $theme, $path) {
   return [
     'cats' => [
