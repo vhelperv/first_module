@@ -115,5 +115,22 @@ class HelperFormGetNameCat extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) : AjaxResponse {}
+  public function submitForm(array &$form, FormStateInterface $form_state) : AjaxResponse {
+    $values = $form_state->getValues();
+    $file_data = $values['cats_image'];
+    $file = \Drupal\file\Entity\File::load($file_data[0]);
+    $file->setPermanent();
+    $file->save();
+    $file_id = $file->id();
+
+    \Drupal::database()->insert('helper')->fields([
+      'cat_name' => $values['cat_name'],
+      'user_email' => $values['user_email'],
+      'cats_image_id' => $file_id,
+      'created' => time()
+    ])->execute();
+    $resp = new AjaxResponse();
+    $resp ->addCommand(new MessageCommand("User Details Submitted Successfully",NULL,['type' => 'status'],TRUE));
+    return $resp;
+  }
 }
