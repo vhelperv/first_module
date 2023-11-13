@@ -1,0 +1,31 @@
+#cats-table {
+  .image-container {
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0,0,0,0.7);
+    }
+  }
+
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    &.overlay {
+      max-width: 70%;
+      max-height: 70%;
+      width: auto;
+      height: auto;
+    }
+  }
+}

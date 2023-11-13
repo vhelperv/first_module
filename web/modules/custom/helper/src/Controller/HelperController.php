@@ -2,6 +2,7 @@
 
 namespace Drupal\helper\Controller;
 
+use DateTimeImmutable;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\file\Entity\File;
 
@@ -32,10 +33,10 @@ class HelperController extends ControllerBase {
         'cat_name' => $row->cat_name,
         'user_email' => $row->user_email,
         'cats_image' => $image_url,
-        'created' => date('d-m-Y', $row->created),
+        'id_image' => $row->cats_image_id,
+        'created' => date('d/m/Y H:i:s',$row->created),
       ];
     }
-
     $infoCats = [
       '#theme' => 'cats-view',
       '#content' => $content

@@ -1,1 +1,6 @@
 @import "Message/error-message";
+@import "Images/view-images";
+
+body.lock {
+  overflow: hidden;
+}

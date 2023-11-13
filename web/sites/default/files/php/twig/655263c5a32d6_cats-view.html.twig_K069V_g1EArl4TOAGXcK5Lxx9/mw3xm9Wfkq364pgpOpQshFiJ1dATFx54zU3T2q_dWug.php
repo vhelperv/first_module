@@ -36,7 +36,7 @@ class __TwigTemplate_b96173d9dd4a63f4cef1defafe1e44a1 extends \Twig\Template
     {
         $macros = $this->macros;
         // line 10
-        echo "<table>
+        echo "<table id=\"cats-table\">
   <thead>
   <tr>
     <th>";
@@ -73,10 +73,14 @@ class __TwigTemplate_b96173d9dd4a63f4cef1defafe1e44a1 extends \Twig\Template
             // line 23
             echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "user_email", [], "any", false, false, true, 23), 23, $this->source), "html", null, true);
             echo "</td>
-      <td><img src=\"";
+      <td><div class=\"image-container\" id=\"image-container-";
             // line 24
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "id_image", [], "any", false, false, true, 24), 24, $this->source), "html", null, true);
+            echo "\"><img class=\"responsive-image\" id=\"responsive-image-";
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "id_image", [], "any", false, false, true, 24), 24, $this->source), "html", null, true);
+            echo "\" src=\"";
             echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "cats_image", [], "any", false, false, true, 24), 24, $this->source), "html", null, true);
-            echo "\" width=\"500\" height=\"700\" alt=\"Cat Image\"></td>
+            echo "\" alt=\"Cat Image\"></div></td>
       <td>";
             // line 25
             echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "created", [], "any", false, false, true, 25), 25, $this->source), "html", null, true);
@@ -105,7 +109,7 @@ class __TwigTemplate_b96173d9dd4a63f4cef1defafe1e44a1 extends \Twig\Template
 
     public function getDebugInfo()
     {
-        return array (  91 => 28,  82 => 25,  78 => 24,  74 => 23,  70 => 22,  67 => 21,  63 => 20,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  39 => 10,);
+        return array (  95 => 28,  86 => 25,  78 => 24,  74 => 23,  70 => 22,  67 => 21,  63 => 20,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  39 => 10,);
     }
 
     public function getSourceContext()
