@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override for displaying the list of cats.
+ *
+ * Available variables:
+ * - query: The query data to be displayed.
+ */
+#}
+<table>
+  <thead>
+  <tr>
+    <th>{{ 'Name Cat'|t }}</th>
+    <th>{{ 'User Email'|t }}</th>
+    <th>{{ 'Photo Cat'|t }}</th>
+    <th>{{ 'Created'|t }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for row in content %}
+    <tr>
+      <td>{{ row.cat_name }}</td>
+      <td>{{ row.user_email }}</td>
+      <td><img src="{{ row.cats_image }}" width="500" height="700" alt="Cat Image"></td>
+      <td>{{ row.created }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

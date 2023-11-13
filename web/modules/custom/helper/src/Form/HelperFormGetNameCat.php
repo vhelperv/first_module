@@ -92,6 +92,8 @@ class HelperFormGetNameCat extends FormBase {
       $form_state->setErrorByName('user_email', $this->t('The email address is invalid.'));
     } elseif (!str_contains($userEmail, '@')) {
       $form_state->setErrorByName('user_email', $this->t('Email must contain @.'));
+    } elseif(substr($userEmail, -1) === '@') {
+      $form_state->setErrorByName('user_email', $this->t('A domain is required.'));
     }
 
   }
