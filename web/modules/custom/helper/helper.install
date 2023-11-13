@@ -62,10 +62,3 @@ function helper_install() {
 function helper_uninstall() {
   \Drupal::state()->delete('helper');
 }
-
-/**
- * Implements hook_update_last_removed().
- */
-function helper_update_last_removed() {
-  return 8700;
-}

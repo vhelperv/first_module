@@ -5,3 +5,11 @@ helper.cats:
     _controller: 'Drupal\helper\Controller\HelperController::ElementsPage'
   requirements:
     _permission: 'access content'
+
+helper.view:
+  path: '/helper/cats-view'
+  defaults:
+    _title: 'Cats'
+    _controller: 'Drupal\helper\Controller\HelperController::catList'
+  requirements:
+    _permission: 'access content'
