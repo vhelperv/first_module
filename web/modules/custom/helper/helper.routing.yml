@@ -13,3 +13,19 @@ helper.view:
     _controller: 'Drupal\helper\Controller\HelperController::catList'
   requirements:
     _permission: 'access content'
+
+helper.edit:
+  path: '/helper/cats/{id}/edit'
+  defaults:
+    _controller: '\Drupal\helper\Controller\HelperController::edit'
+    _title: 'Edit Entity'
+  requirements:
+    _permission: 'administer site configuration'
+
+helper.delete:
+  path: '/helper/cats/{id}/delete'
+  defaults:
+    _controller: '\Drupal\helper\Controller\HelperController::delete'
+    _title: 'Delete Entity'
+  requirements:
+    _permission: 'administer site configuration'

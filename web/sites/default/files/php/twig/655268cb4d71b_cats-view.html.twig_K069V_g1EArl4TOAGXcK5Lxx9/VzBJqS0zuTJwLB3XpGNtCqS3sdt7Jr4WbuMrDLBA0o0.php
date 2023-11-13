@@ -85,13 +85,21 @@ class __TwigTemplate_b96173d9dd4a63f4cef1defafe1e44a1 extends \Twig\Template
             // line 25
             echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "created", [], "any", false, false, true, 25), 25, $this->source), "html", null, true);
             echo "</td>
+      <td>";
+            // line 26
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "edit_button", [], "any", false, false, true, 26), 26, $this->source), "html", null, true);
+            echo "</td>
+      <td>";
+            // line 27
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["row"], "delete_button", [], "any", false, false, true, 27), 27, $this->source), "html", null, true);
+            echo "</td>
     </tr>
   ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['row'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 28
+        // line 30
         echo "  </tbody>
 </table>
 ";
@@ -109,7 +117,7 @@ class __TwigTemplate_b96173d9dd4a63f4cef1defafe1e44a1 extends \Twig\Template
 
     public function getDebugInfo()
     {
-        return array (  95 => 28,  86 => 25,  78 => 24,  74 => 23,  70 => 22,  67 => 21,  63 => 20,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  39 => 10,);
+        return array (  103 => 30,  94 => 27,  90 => 26,  86 => 25,  78 => 24,  74 => 23,  70 => 22,  67 => 21,  63 => 20,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  39 => 10,);
     }
 
     public function getSourceContext()

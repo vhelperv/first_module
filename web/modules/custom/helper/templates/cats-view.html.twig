@@ -23,6 +23,8 @@
       <td>{{ row.user_email }}</td>
       <td><div class="image-container" id="image-container-{{ row.id_image }}"><img class="responsive-image" id="responsive-image-{{ row.id_image }}" src="{{ row.cats_image }}" alt="Cat Image"></div></td>
       <td>{{ row.created }}</td>
+      <td>{{ row.edit_button }}</td>
+      <td>{{ row.delete_button }}</td>
     </tr>
   {% endfor %}
   </tbody>
