@@ -9,7 +9,7 @@ use Drupal\file\Entity\File;
 
 class HelperController extends ControllerBase {
   public function ElementsPage (){
-    $form = \Drupal::formBuilder()->getForm('Drupal\helper\Form\HelperFormGetNameCat');
+    $form = \Drupal::formBuilder()->getForm('Drupal\helper\Form\HelperFormGetCat');
     return [
       '#theme' => 'cats',
       '#form' => $form,
@@ -36,11 +36,8 @@ class HelperController extends ControllerBase {
       $file = File::load($row->cats_image_id);
       $image_url = $file ? file_create_url($file->getFileUri()) : '';
 
-      $edit_url = Url::fromRoute('helper.edit', ['id' => $row->id]);
-      $delete_url = Url::fromRoute('helper.delete', ['id' => $row->id]);
-
-      $edit_link = $is_admin ? Link::fromTextAndUrl(t('Edit'), $edit_url) : '';
-      $delete_link = $is_admin ? Link::fromTextAndUrl(t('Delete'), $delete_url) : '';
+      $edit_link = Link::createFromRoute('', 'helper.edit', ['id' => $row->id]);
+      $delete_link = Link::createFromRoute('', 'helper.delete', ['id' => $row->id]);
       $content[] = [
         'cat_name' => $row->cat_name,
         'user_email' => $row->user_email,
@@ -49,11 +46,13 @@ class HelperController extends ControllerBase {
         'created' => date('d/m/Y H:i:s',$row->created),
         'edit_button' => $edit_link,
         'delete_button' => $delete_link,
+        'id' => $row->id,
       ];
     }
     $infoCats = [
       '#theme' => 'cats-view',
-      '#content' => $content
+      '#content' => $content,
+      '#is_admin' => $is_admin
     ];
 
     return $infoCats;

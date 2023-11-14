@@ -10,7 +10,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 
-class HelperFormGetNameCat extends FormBase {
+class HelperFormGetCat extends FormBase {
 
   /**
    * {@inheritdoc}
