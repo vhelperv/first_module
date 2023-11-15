@@ -15,8 +15,7 @@
     <th>{{ 'Photo Cat'|t }}</th>
     <th>{{ 'Created'|t }}</th>
     {% if is_admin %}
-      <th>{{ 'Edit'|t }}</th>
-      <th>{{ 'Delete'|t }}</th>
+      <th>{{ 'Operations'|t }}</th>
     {% endif %}
   </tr>
   </thead>
@@ -28,8 +27,7 @@
       <td><div class="image-container" id="image-container-{{ row.id_image }}"><img class="responsive-image" id="responsive-image-{{ row.id_image }}" src="{{ row.cats_image }}" alt="Cat Image"></div></td>
       <td>{{ row.created }}</td>
       {% if is_admin %}
-        <td><a href="{{ row.edit_button.getUrl }}" class="button" id="edit-cat-info-{{ row.id }}">{{ 'Edit'|t }}</a></td>
-        <td><a href="{{ row.delete_button.getUrl }}" class="button" id="delete-cat-info-{{ row.id }}">{{ 'Delete'|t }}</a></td>
+      <td>{{ row.control }}</td>
       {% endif %}
     </tr>
   {% endfor %}

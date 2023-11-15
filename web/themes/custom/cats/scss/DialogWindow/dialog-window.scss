@@ -1,0 +1,18 @@
+.ui-widget {
+  width: auto!important;
+  & > #drupal-modal{
+    & > form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      input {
+        &:nth-child(1) {
+          margin-right: 20px;
+        }
+        &:nth-child(2) {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}

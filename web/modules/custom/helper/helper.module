@@ -8,7 +8,7 @@ function helper_theme($existing, $type, $theme, $path) {
     ],
     'cats-view' => [
       'variables' => [
-        'content' => NULL
+        'content' => NULL,
       ],
     ],
   ];

@@ -6,6 +6,14 @@ helper.cats:
   requirements:
     _permission: 'access content'
 
+helper.form-submit-delete:
+  path: '/confirmation-delete/{id}'
+  defaults:
+    _title: 'Do you agree to delete this cat`s data?'
+    _form: 'Drupal\helper\Form\ConfirmationDeleteForm'
+  requirements:
+    _permission: 'user details custom form permission'
+
 helper.view:
   path: '/helper/cats-view'
   defaults:
@@ -17,15 +25,7 @@ helper.view:
 helper.edit:
   path: '/helper/cats/{id}/edit'
   defaults:
-    _controller: '\Drupal\helper\Controller\HelperController::edit'
     _title: 'Edit Entity'
-  requirements:
-    _permission: 'administer site configuration'
-
-helper.delete:
-  path: '/helper/cats/{id}/delete'
-  defaults:
-    _controller: '\Drupal\helper\Controller\HelperController::delete'
-    _title: 'Delete Entity'
+    _controller: '\Drupal\helper\Controller\HelperController::edit'
   requirements:
     _permission: 'administer site configuration'
