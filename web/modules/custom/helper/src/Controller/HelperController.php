@@ -28,12 +28,17 @@ class HelperController extends ControllerBase {
       ->execute()
       ->fetchAll(\PDO::FETCH_OBJ);
     $content = [];
+    $bulk['#attached']['library'] = 'core/drupal.dialog.ajax';
+    $bulk = [
+      '#markup' => '<a href="/confirmation-bulk-delete" class="use-ajax button delete-selected" data-dialog-type="modal">Delete Selected</a>'
+    ];
     foreach ($result as $row) {
       $file = File::load($row->cats_image_id);
       $image_url = $file ? file_create_url($file->getFileUri()) : '';
       $id = $row->id;
       $edit_link = Link::createFromRoute('', 'helper.edit', ['id' => $row->id]);
       $delete_link = Link::createFromRoute('', 'helper.form-submit-delete', ['id' => $row->id]);
+
       $edit = $edit_link->toRenderable();
       $edit['#title'] = $this->t('Edit');
       $edit['#attributes']['class'][] = 'edit-cat-info';
@@ -41,11 +46,23 @@ class HelperController extends ControllerBase {
       $edit['#attributes']['id'] = 'edit-cat-info-' . $row->id;
 
       $build['#attached']['library'] = 'core/drupal.dialog.ajax';
+      $checkbox = [
+        '#type' => 'checkbox',
+        '#attributes' => [
+          'class' => ['cat-checkbox'],
+        ],
+        '#return_value' => $row->id,
+        '#name' => 'selected_cats[' . $row->id . ']',
+      ];
+      $group = [
+        '#markup' => \Drupal::service('renderer')->render($checkbox)
+      ];
       $build = [
-        '#markup' => '<a href="/confirmation-delete/'.$row->id.'" class="use-ajax button" data-dialog-type="modal">Delete</a>'
+        '#markup' => '<a href="/confirmation-delete/' . $row->id . '" class="use-ajax button" data-dialog-type="modal">Delete</a>'
       ];
 
       $content[] = [
+        'checkbox' => $group,
         'cat_name' => $row->cat_name,
         'user_email' => $row->user_email,
         'cats_image' => $image_url,
@@ -61,10 +78,12 @@ class HelperController extends ControllerBase {
     $infoCats = [
       '#theme' => 'cats-view',
       '#content' => $content,
-      '#is_admin' => $is_admin
+      '#is_admin' => $is_admin,
+      '#bulk_deletion' => $bulk
     ];
     return $infoCats;
   }
+
   public function edit(){
     $form = \Drupal::formBuilder()->getForm('Drupal\helper\Form\FormEditCatInfo');
     return [

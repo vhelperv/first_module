@@ -9,8 +9,16 @@ helper.cats:
 helper.form-submit-delete:
   path: '/confirmation-delete/{id}'
   defaults:
-    _title: 'Do you agree to delete this cat`s data?'
+    _title: 'Confirmation Delete'
     _form: 'Drupal\helper\Form\ConfirmationDeleteForm'
+  requirements:
+    _permission: 'user details custom form permission'
+
+helper.confirmation-bulk-delete:
+  path: '/confirmation-bulk-delete'
+  defaults:
+    _title: 'Confirmation Delete'
+    _form: 'Drupal\helper\Form\ConfirmationBulkDelete'
   requirements:
     _permission: 'user details custom form permission'
 

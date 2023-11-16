@@ -11,6 +11,7 @@
   <thead>
   <tr>
     <th>{{ 'Name Cat'|t }}</th>
+    <th>{{ 'Select'|t }}</th>
     <th>{{ 'User Email'|t }}</th>
     <th>{{ 'Photo Cat'|t }}</th>
     <th>{{ 'Created'|t }}</th>
@@ -22,6 +23,7 @@
   <tbody>
   {% for row in content %}
     <tr>
+      <td>{{ row.checkbox }}</td>
       <td>{{ row.cat_name }}</td>
       <td>{{ row.user_email }}</td>
       <td><div class="image-container" id="image-container-{{ row.id_image }}"><img class="responsive-image" id="responsive-image-{{ row.id_image }}" src="{{ row.cats_image }}" alt="Cat Image"></div></td>
@@ -33,3 +35,4 @@
   {% endfor %}
   </tbody>
 </table>
+<div class="bulk-deletion" >{{ bulk_deletion }}</div>

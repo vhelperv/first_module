@@ -2,16 +2,29 @@
   width: auto!important;
   & > #drupal-modal{
     & > form {
-      display: flex;
+      display: grid;
       align-items: center;
       justify-content: center;
-      input {
+      & > p {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-column-end: 4;
+      }
+      & > input {
+        margin: 20px auto;
         &:nth-child(1) {
-          margin-right: 20px;
+          grid-row-start: 2;
+          grid-column-start: 1;
+          grid-column-end: 2;
         }
         &:nth-child(2) {
-          margin-left: 20px;
+          grid-row-start: 2;
+          grid-column-start: 3;
+          grid-column-end: 4;
         }
+      }
+      & > div {
+        display: none;
       }
     }
   }

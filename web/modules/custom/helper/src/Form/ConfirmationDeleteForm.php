@@ -17,6 +17,17 @@ class ConfirmationDeleteForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $current_url = \Drupal::request()->getRequestUri();
     $form_state->set('current_url', $current_url);
+    $id = $this->getEntityIdFromUrl($current_url);
+    $query = \Drupal::database();
+    $result = $query->select('helper', 'h')
+      ->fields('h', ['cat_name'])
+      ->condition('id', $id, '=')
+      ->execute();
+    $name = $result->fetchField();
+
+    $form['title'] = [
+      '#markup' => '<p>' . t("Do you agree to delete '@name' data?", ['@name' => $name]) . '</p>',
+    ];
 
     $form['actions']['#type'] = 'actions';
     $form['submit'] = [
@@ -42,7 +53,7 @@ class ConfirmationDeleteForm extends FormBase {
     $query->delete('helper')
       ->condition('id',$id,'=')
       ->execute();
-    $url = Url::fromUri('internal:/helper/cats-view');
+    $url = Url::fromUri('internal:/admin/structure/cats-list');
     $form_state->setRedirectUrl($url);
     drupal_flush_all_caches();
   }

@@ -74,7 +74,6 @@ class HelperFormGetCat extends FormBase {
       ],
     ];
     return $form;
-
   }
 
   /**
