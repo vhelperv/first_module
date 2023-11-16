@@ -1,0 +1,5 @@
+helper.cats_list:
+  title: 'Cats List'
+  parent: system.admin_structure
+  route_name: helper.cats_list
+  description: 'View the list of cats.'

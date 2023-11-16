@@ -14,18 +14,18 @@ helper.form-submit-delete:
   requirements:
     _permission: 'user details custom form permission'
 
-helper.view:
-  path: '/helper/cats-view'
+helper.cats_list:
+  path: '/admin/structure/cats-list'
   defaults:
-    _title: 'Cats'
+    _title: 'Cats List'
     _controller: 'Drupal\helper\Controller\HelperController::catList'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer site configuration'
 
 helper.edit:
   path: '/helper/cats/{id}/edit'
   defaults:
-    _title: 'Edit Entity'
+    _title: 'Edit Cat Info'
     _controller: '\Drupal\helper\Controller\HelperController::edit'
   requirements:
     _permission: 'administer site configuration'
