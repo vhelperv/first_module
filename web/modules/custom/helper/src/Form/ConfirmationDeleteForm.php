@@ -6,6 +6,7 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Url;
 
 class ConfirmationDeleteForm extends FormBase {
 
@@ -41,8 +42,9 @@ class ConfirmationDeleteForm extends FormBase {
     $query->delete('helper')
       ->condition('id',$id,'=')
       ->execute();
-
-    $form_state->setRedirect('/helper/cats-view');
+    $url = Url::fromUri('internal:/helper/cats-view');
+    $form_state->setRedirectUrl($url);
+    drupal_flush_all_caches();
   }
   private function getEntityIdFromUrl($url) {
     // Parse the URL.

@@ -1,0 +1,22 @@
+uuid: 6777c3c6-69da-405e-a412-4248bff74af7
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - vacation
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: vacation_content
+theme: vacation
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

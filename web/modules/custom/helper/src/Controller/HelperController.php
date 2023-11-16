@@ -65,6 +65,11 @@ class HelperController extends ControllerBase {
     ];
     return $infoCats;
   }
-  public function edit(){}
-
+  public function edit(){
+    $form = \Drupal::formBuilder()->getForm('Drupal\helper\Form\FormEditCatInfo');
+    return [
+      '#theme' => 'cats',
+      '#form' => $form,
+    ];
+  }
 }

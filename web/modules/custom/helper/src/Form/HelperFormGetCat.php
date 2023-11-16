@@ -4,12 +4,12 @@ namespace Drupal\helper\Form;
 
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
 use Drupal\Core\Ajax\InvokeCommand;
-
 class HelperFormGetCat extends FormBase {
 
   /**
@@ -61,6 +61,8 @@ class HelperFormGetCat extends FormBase {
         'file_validate_extensions' => ['jpg jpeg png'],
         'file_validate_size' => [2 * 1024 * 1024],
       ],
+      '#prefix' => '<div id="cats-image-wrapper">',
+      '#suffix' => '</div>',
     ];
     $form['actions']['#type'] = 'actions';
     $form['submit'] = [
@@ -93,7 +95,6 @@ class HelperFormGetCat extends FormBase {
     } elseif(substr($userEmail, -1) === '@') {
       $form_state->setErrorByName('user_email', $this->t('A domain is required.'));
     }
-
   }
   public function validateEmail(array &$form, FormStateInterface $form_state) : AjaxResponse {
     $response = new AjaxResponse();
@@ -121,6 +122,11 @@ class HelperFormGetCat extends FormBase {
 
     return $response;
   }
+  protected function resetFormValues(array &$form, FormStateInterface $form_state) {
+    $form_state->setRebuild(TRUE);
+    $form_state->setValues([]);
+    $form_state->setStorage([]);
+  }
   /**
    * {@inheritdoc}
    */
@@ -140,17 +146,17 @@ class HelperFormGetCat extends FormBase {
         'created' => time(),
       ])->execute();
 
-      // Заміна поточного поля файлу новим пустим полем.
-/*      $response->addCommand(new ReplaceCommand(
-        '.form-managed-file',
-        Markup::create('<input data-drupal-selector="edit-cats-image-upload" type="file" id="edit-cats-image-upload" name="files[cats_image]" size="22" class="js-form-file form-file form-element form-element--type-file form-element--api-file" data-once="fileValidate auto-file-upload"><input class="js-hide upload-button button js-form-submit form-submit" data-drupal-selector="edit-cats-image-upload-button" formnovalidate="formnovalidate" type="submit" id="edit-cats-image-upload-button" name="cats_image_upload_button" value="Upload" data-once="drupal-ajax"><input data-drupal-selector="edit-cats-image-fids" type="hidden" name="cats_image[fids]">')
-      ));*/
       $response->addCommand(new InvokeCommand('#edit-cat-name', 'val', ['']));
       $response->addCommand(new InvokeCommand('#edit-user-email', 'val', ['']));
-      $response->addCommand(new MessageCommand("User Details Submitted Successfully", NULL, ['type' => 'status'], TRUE));
+      //$response->addCommand(new ReplaceCommand('#cats-image-wrapper', $form['cats_image']['#default_value']));
+      drupal_flush_all_caches();
     } else {
       $response->addCommand(new MessageCommand("Form Invalid", NULL, ['type' => 'error'], TRUE));
+      if (mb_strlen($values['cat_name'], 'UTF-8') < 2 || mb_strlen($values['cat_name'], 'UTF-8') > 32) {
+        $response->addCommand(new MessageCommand("The cat name must be between 2 and 32 characters long.", NULL, ['type' => 'error'], TRUE));
+      }
     }
+    $form_state->clearErrors();
     return $response;
   }
 }

@@ -1,6 +1,10 @@
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
+  admin_toolbar: 0
+  admin_toolbar_links_access_filter: 0
+  admin_toolbar_search: 0
+  admin_toolbar_tools: 0
   automated_cron: 0
   big_pipe: 0
   block: 0
@@ -20,8 +24,10 @@ module:
   file: 0
   filter: 0
   help: 0
+  helper: 0
   history: 0
   image: 0
+  language: 0
   link: 0
   menu_link_content: 0
   menu_ui: 0
@@ -46,4 +52,8 @@ module:
 theme:
   olivero: 0
   claro: 0
+  gin: 0
+  vacation: 0
+  helper: 0
+  cats: 0
 profile: standard

@@ -1,0 +1,20 @@
+uuid: a670d1f8-44ba-4e3f-9fb6-102fab4b7142
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cats
+_core:
+  default_config_hash: OQ9aJ-4qVwK1x00o9EOYK4eFDjQr_HLpbPiJaPSVZiQ
+id: cats_local_actions
+theme: cats
+region: content
+weight: -10
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }
