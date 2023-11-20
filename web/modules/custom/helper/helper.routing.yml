@@ -1,11 +1,13 @@
+#Form for adding a new cat
 helper.cats:
   path: '/helper/cats'
   defaults:
     _title: 'Hello! You can add here a photo of your cat.'
-    _controller: 'Drupal\helper\Controller\HelperController::ElementsPage'
+    _controller: 'Drupal\helper\Controller\HelperController::getCatInfo'
   requirements:
     _permission: 'access content'
 
+#Form(modal) to confirm deletion of information about a cat (for one)
 helper.form-submit-delete:
   path: '/confirmation-delete/{id}'
   defaults:
@@ -14,14 +16,16 @@ helper.form-submit-delete:
   requirements:
     _permission: 'user details custom form permission'
 
+#Form(modal) to confirm deletion of information about a cats (for more than one)
 helper.confirmation-bulk-delete:
   path: '/confirmation-bulk-delete'
   defaults:
-    _title: 'Confirmation Delete'
+    _title: 'Confirm the deletion'
     _form: 'Drupal\helper\Form\ConfirmationBulkDelete'
   requirements:
     _permission: 'user details custom form permission'
 
+#A page that displays all information about cats
 helper.cats_list:
   path: '/admin/structure/cats-list'
   defaults:
@@ -30,6 +34,7 @@ helper.cats_list:
   requirements:
     _permission: 'administer site configuration'
 
+#Form for editing information about cats
 helper.edit:
   path: '/helper/cats/{id}/edit'
   defaults:

@@ -4,6 +4,7 @@
  */
 use Drupal\Core\Database\Database;
 
+// Creating a module table markup
 function helper_schema() {
   $schema['helper'] = [
     'description' => 'Table for storing data from the form',
@@ -44,6 +45,7 @@ function helper_schema() {
   return $schema;
 }
 
+// Creating a database table when installing the module
 function helper_install() {
   Database::getConnection()->insert('helper')
     ->fields([
@@ -59,6 +61,8 @@ function helper_install() {
 /**
  * Implements hook_uninstall().
  */
+
+// Deleting created tables when uninstalling the module
 function helper_uninstall() {
   \Drupal::state()->delete('helper');
 }

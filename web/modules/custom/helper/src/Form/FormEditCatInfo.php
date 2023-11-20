@@ -15,12 +15,15 @@ class FormEditCatInfo extends HelperFormGetCat {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    // Cat name textfield
     $form['cat_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#description' => $this->t('The name must be between 2 and 32 characters long.'),
       '#default_value' => '',
     ];
+
+    // User email field with Ajax validation
     $form['user_email'] = [
       '#type' => 'email',
       '#title' => $this->t('Your email:'),
@@ -34,6 +37,8 @@ class FormEditCatInfo extends HelperFormGetCat {
         'event' => 'input'
       ],
     ];
+
+    // Cats image managed file field
     $form['cats_image'] = [
       '#type' => 'managed_file',
       '#title' => $this ->t('Image Upload'),
@@ -45,6 +50,8 @@ class FormEditCatInfo extends HelperFormGetCat {
         'file_validate_size' => [2 * 1024 * 1024],
       ],
     ];
+
+    // Form actions for submit
     $form['actions']['#type'] = 'actions';
     $form['submit'] = [
       '#type' => 'button',
@@ -54,6 +61,8 @@ class FormEditCatInfo extends HelperFormGetCat {
         'event' => 'click'
       ],
     ];
+
+    // Fetch the cat ID from the route parameters
     $route_match = \Drupal::routeMatch();
     $route_parameters = $route_match->getParameters();
     $id = $route_parameters->get('id');
@@ -81,16 +90,21 @@ class FormEditCatInfo extends HelperFormGetCat {
         }
       }
     }
-    return $form;
 
+    return $form;
   }
+
+  // Validate form method
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
   }
+
+  // Validate email method with Ajax response
   public function validateEmail(array &$form, FormStateInterface $form_state) : AjaxResponse {
     return parent::validateEmail($form, $form_state);
   }
 
+  // Submit method for updating cat information
   public function submitUpdate(array &$form, FormStateInterface $form_state) : AjaxResponse {
     $values = $form_state->getValues();
     $file_data = $values['cats_image'];
@@ -99,28 +113,37 @@ class FormEditCatInfo extends HelperFormGetCat {
     $file->save();
     $file_id = $file->id();
 
+    // Get cat ID from route parameters
     $current_path = \Drupal::service('path.current')->getPath();
     $route_match = \Drupal::routeMatch();
     $route_parameters = $route_match->getParameters();
     $id = $route_parameters->get('id');
     $response = new AjaxResponse();
+
+    // Check for form errors
     if (!$form_state->getErrors()) {
+      // Update database with new cat information
       \Drupal::database()->update('helper')
         ->fields([
-        'cat_name' => $values['cat_name'],
-        'user_email' => $values['user_email'],
-        'cats_image_id' => $file_id,
-       ])
+          'cat_name' => $values['cat_name'],
+          'user_email' => $values['user_email'],
+          'cats_image_id' => $file_id,
+        ])
         ->condition('id', $id,'=')
         ->execute();
+
+      // Clear caches
       drupal_flush_all_caches();
 
-      $url = Url::fromUri('internal:/helper/cats-view');
+      // Redirect to the cats list page
+      $url = Url::fromUri('internal:/admin/structure/cats-list');
       $redirect_command = new RedirectCommand($url->toString());
       $response->addCommand($redirect_command);
 
+      // Display success message
       \Drupal::messenger()->addStatus(t('User Details Updated Successfully'));
     } else {
+      // Display error message if form has errors
       $response->addCommand(new MessageCommand("The entered data is not valid. Update declined", NULL, ['type' => 'error'], TRUE));
     }
     return $response;

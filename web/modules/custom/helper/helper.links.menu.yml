@@ -1,3 +1,4 @@
+#Add the page to the structure menu
 helper.cats_list:
   title: 'Cats List'
   parent: system.admin_structure
