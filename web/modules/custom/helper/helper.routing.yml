@@ -25,7 +25,7 @@ helper.confirmation-bulk-delete:
   requirements:
     _permission: 'user details custom form permission'
 
-#A page that displays all information about cats
+#A page that displays all information about cats(admin)
 helper.cats_list:
   path: '/admin/structure/cats-list'
   defaults:
@@ -33,6 +33,15 @@ helper.cats_list:
     _controller: 'Drupal\helper\Controller\HelperController::catList'
   requirements:
     _permission: 'administer site configuration'
+
+#A page that displays all information about cats(user)
+helper.cats_list_user:
+  path: '/helper/cats-list'
+  defaults:
+    _title: 'Cats List'
+    _controller: 'Drupal\helper\Controller\HelperController::catList'
+  requirements:
+    _permission: 'access content'
 
 #Form for editing information about cats
 helper.edit:

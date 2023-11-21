@@ -17,6 +17,7 @@ class HelperController extends ControllerBase {
 
   // Function to call a table that displays all cat records from the DB table 'helper'
   public function catList() {
+    drupal_flush_all_caches();
     $form = \Drupal::formBuilder()->getForm('Drupal\helper\Form\CatListControlForm');
     return [
       '#theme' => 'cats-view',

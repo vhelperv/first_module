@@ -1,7 +1,33 @@
-@import "Message/error-message";
 @import "Images/view-images";
 @import "DialogWindow/dialog-window";
-
+@import "Menu/cats-menu";
 body.lock {
   overflow: hidden;
+}
+.page-wrapper {
+  padding-top: 100px;
+}
+.block-page-title-block {
+  text-align: center;
+  .page-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 30px;
+  }
+}
+
+form#cat-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 170px;
+  margin: 0 auto;
+  width: 50%;
+  & > div {
+    width: auto;
+    &:nth-child(3) {
+     align-items: flex-end;
+    }
+  }
 }

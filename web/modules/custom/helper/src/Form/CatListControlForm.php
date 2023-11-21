@@ -2,8 +2,6 @@
 
 namespace Drupal\helper\Form;
 
-use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -40,26 +38,62 @@ class CatListControlForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    // Check if the current user has admin permission
+    $isAdmin = \Drupal::currentUser()->hasPermission('administer site configuration');
+    // Get the current route name
+    $current_route = \Drupal::routeMatch()->getRouteName();
+    // Check if the current route is 'helper.cats_list'
+    $isCatsListRoute = $current_route == 'helper.cats_list';
+
+    // Table header for cat list
     $header = [
       'cat_name' => $this->t('Cat Name'),
       'user_email' => $this->t('User Email'),
       'cats_image' => $this->t('Cat Image'),
       'created' => $this->t('Created'),
-      'edit' => $this->t('Edit'),
-      'delete' => $this->t('Delete'),
     ];
 
-    // Library modal window
+    // Attach library for modal window
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
 
-    $form['cats'] = [
+    // Check if the user is not on the 'helper.cats_list' route and is an admin
+    if (!$isCatsListRoute && $isAdmin) {
+      // Table element for admin
+      $form['cats_user'] = [
+        '#type' => 'table',
+        '#header' => $header + ['edit' => $this->t('Edit'), 'delete' => $this->t('Delete')],
+        '#empty' => $this->t('No cats found'),
+        '#rows' => $this->getCats(),
+        '#attributes' => ['id' => 'cat-list-table-user'],
+      ];
+
+      return $form;
+    }
+
+    // Display for regular user
+    if (!$isAdmin) {
+      // Table element for regular user
+      $form['cats_user'] = [
+        '#type' => 'table',
+        '#header' => $header,
+        '#empty' => $this->t('No cats found'),
+        '#rows' => $this->getCatsAsRows(),
+        '#attributes' => ['id' => 'cat-list-table-user'],
+      ];
+
+      return $form;
+    }
+
+    // Tableselect element for admin
+    $form['cats_admin'] = [
       '#type' => 'tableselect',
-      '#header' => $header,
+      '#header' => $header + ['edit' => $this->t('Edit'), 'delete' => $this->t('Delete')],
       '#empty' => $this->t('No cats found'),
       '#options' => $this->getCats(),
-      '#attributes' => ['id' => 'cat-list-table'],
+      '#attributes' => ['id' => 'cat-list-table-admin'],
     ];
 
+    // Submit button for bulk delete (visible only for admin)
     $form['actions']['delete'] = [
       '#type' => 'submit',
       '#value' => $this->t('Delete Selected Cats'),
@@ -69,7 +103,28 @@ class CatListControlForm extends FormBase {
     return $form;
   }
 
+  /**
+   * Helper function to get cat data as rows for the table.
+   */
+  protected function getCatsAsRows() {
+    $cats = $this->getCats();
+    $rows = [];
+
+    foreach ($cats as $cat) {
+      $rows[] = [
+        'cat_name' => $cat['cat_name'],
+        'user_email' => $cat['user_email'],
+        'cats_image' => $cat['cats_image'],
+        'created' => $cat['created'],
+      ];
+    }
+
+    return $rows;
+  }
+
+  // Fetch cat data from the database
   protected function getCats() {
+    // Query the database for cat information
     $query = \Drupal::database();
     $result = $query->select('helper', 'h')
       ->fields('h', [
@@ -85,22 +140,23 @@ class CatListControlForm extends FormBase {
 
     $cats = [];
     foreach ($result as $row) {
+      // Build an array with cat information
+      $isAdmin = \Drupal::currentUser()->hasPermission('administer site configuration');
+
       $cats[$row->id] = [
         'cat_name' => $row->cat_name,
         'user_email' => $row->user_email,
         'cats_image' => $this->buildCatImageMarkup($row->cats_image_id),
         'created' => date('d/m/Y H:i:s', $row->created),
-        'edit' => $this->buildEditLink($row->id),
-        'delete' => $this->buildDeleteLink($row->id),
+        'edit' => $isAdmin ? $this->buildEditLink($row->id) : '',
+        'delete' => $isAdmin ? $this->buildDeleteLink($row->id) : '',
       ];
     }
 
     return $cats;
   }
 
-  /**
-   * Builds markup for the cat image.
-   */
+  // Build markup for displaying cat images
   protected function buildCatImageMarkup($catsImageId) {
     $file = File::load($catsImageId);
     $image_url = $file ? file_create_url($file->getFileUri()) : '';
@@ -119,9 +175,7 @@ class CatListControlForm extends FormBase {
     return render($image_markup);
   }
 
-  /**
-   * Builds the edit link for a cat.
-   */
+  // Build link for editing cat information
   protected function buildEditLink($catId) {
     $url = Url::fromRoute('helper.edit', ['id' => $catId]);
     $edit_link = Link::fromTextAndUrl($this->t('Edit'), $url)->toRenderable();
@@ -131,9 +185,7 @@ class CatListControlForm extends FormBase {
     return render($edit_link);
   }
 
-  /**
-   * Builds the delete link for a cat.
-   */
+  // Build link for deleting cat information
   protected function buildDeleteLink($catId) {
     $delete_link = [
       '#markup' => '<a href="/confirmation-delete/' . $catId . '" class="use-ajax button" data-dialog-type="modal">Delete</a>',
@@ -146,7 +198,7 @@ class CatListControlForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Perform bulk deletion based on selected cats.
-    $selected_cats = $form_state->getValue('cats');
+    $selected_cats = $form_state->getValue('cats_admin');
 
     // Check if not all elements in $selected_cats are 0.
     if ($selected_cats && count(array_filter($selected_cats, function ($catId) { return $catId != 0; })) > 0) {

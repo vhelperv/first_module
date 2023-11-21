@@ -2,13 +2,16 @@
 namespace Drupal\helper\Form;
 
 use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\MessageCommand;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Url;
 
 class HelperFormGetCat extends FormBase {
   /**
@@ -23,13 +26,6 @@ class HelperFormGetCat extends FormBase {
    */
   /*FormAjaxResponseBuilder*/
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    // Reset upload field if specified
-    if ($form_state->getValue('reset-upload-field')) {
-      $form['upload']['file']['#file'] = false;
-      $form['upload']['file']['filename'] = [];
-      $form['upload']['file']['#value']['fid'] = '0';
-    }
-
     // Cat name textfield
     $form['cat_name'] = [
       '#type' => 'textfield',
@@ -64,7 +60,7 @@ class HelperFormGetCat extends FormBase {
       '#default_value' => [],
       '#upload_location' => 'public://cats',
       '#upload_validators' => [
-        'file_validate_extensions' => ['jpg', 'jpeg', 'png'],
+        'file_validate_extensions' => ['jpg jpeg png'],
         'file_validate_size' => [2 * 1024 * 1024],
       ],
       '#prefix' => '<div id="cats-image-wrapper">',
@@ -138,13 +134,6 @@ class HelperFormGetCat extends FormBase {
     return $response;
   }
 
-  // Reset form values method
-  protected function resetFormValues(array &$form, FormStateInterface $form_state) {
-    $form_state->setRebuild(TRUE);
-    $form_state->setValues([]);
-    $form_state->setStorage([]);
-  }
-
   /**
    * {@inheritdoc}
    */
@@ -168,24 +157,17 @@ class HelperFormGetCat extends FormBase {
         'created' => time(),
       ])->execute();
 
-      // Clear form values after successful submission
-      $response->addCommand(new InvokeCommand('#edit-cat-name', 'val', ['']));
-      $response->addCommand(new InvokeCommand('#edit-user-email', 'val', ['']));
-
-      // Optionally clear cache (uncomment if needed)
-      // drupal_flush_all_caches();
+      \Drupal::messenger()->addStatus('Your form has been sent.');
     } else {
       // Add error message commands if form has errors
-      $response->addCommand(new MessageCommand("Form Invalid", NULL, ['type' => 'error'], TRUE));
-
+      \Drupal::messenger()->addError('Form Invalid');
       if (mb_strlen($values['cat_name'], 'UTF-8') < 2 || mb_strlen($values['cat_name'], 'UTF-8') > 32) {
-        $response->addCommand(new MessageCommand("The cat name must be between 2 and 32 characters long.", NULL, ['type' => 'error'], TRUE));
+        \Drupal::messenger()->addStatus('The cat name must be between 2 and 32 characters long.');
       }
     }
-
-    // Clear form errors
-    $form_state->clearErrors();
-
+    $url = Url::fromUri('internal:/helper/cats');
+    $redirect_command = new RedirectCommand($url->toString());
+    $response->addCommand($redirect_command);
     return $response;
   }
 }

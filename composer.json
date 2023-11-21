@@ -15,14 +15,15 @@
         }
     ],
     "require": {
+        "ext-pdo": "*",
         "composer/installers": "^1.9",
         "drupal/admin_toolbar": "^3.4",
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-project-message": "^9",
         "drupal/core-recommended": "^9",
         "drupal/gin": "^3.0@RC",
-        "drush/drush": "^10.2",
-      "ext-pdo": "*"
+        "drupal/masquerade": "^2.0@RC",
+        "drush/drush": "^10.2"
     },
     "conflict": {
         "drupal/drupal": "*"

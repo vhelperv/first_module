@@ -114,7 +114,6 @@ class FormEditCatInfo extends HelperFormGetCat {
     $file_id = $file->id();
 
     // Get cat ID from route parameters
-    $current_path = \Drupal::service('path.current')->getPath();
     $route_match = \Drupal::routeMatch();
     $route_parameters = $route_match->getParameters();
     $id = $route_parameters->get('id');
