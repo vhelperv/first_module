@@ -45,19 +45,6 @@ function helper_schema() {
   return $schema;
 }
 
-// Creating a database table when installing the module
-function helper_install() {
-  Database::getConnection()->insert('helper')
-    ->fields([
-      'id' => 0,
-      'cat_name' => '',
-      'user_email' => '',
-      'cats_image_id' => 0,
-      'created' => 0,
-    ])
-    ->execute();
-}
-
 /**
  * Implements hook_uninstall().
  */

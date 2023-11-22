@@ -131,9 +131,6 @@ class FormEditCatInfo extends HelperFormGetCat {
         ->condition('id', $id,'=')
         ->execute();
 
-      // Clear caches
-      drupal_flush_all_caches();
-
       // Redirect to the cats list page
       $url = Url::fromUri('internal:/admin/structure/cats-list');
       $redirect_command = new RedirectCommand($url->toString());

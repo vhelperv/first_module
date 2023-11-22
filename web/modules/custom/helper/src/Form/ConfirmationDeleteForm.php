@@ -82,8 +82,6 @@ class ConfirmationDeleteForm extends FormBase {
     $url = Url::fromUri('internal:/admin/structure/cats-list');
     $form_state->setRedirectUrl($url);
 
-    // Flush all Drupal caches after deletion.
-    drupal_flush_all_caches();
   }
 
   /**

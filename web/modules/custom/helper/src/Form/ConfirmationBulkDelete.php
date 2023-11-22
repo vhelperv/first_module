@@ -84,7 +84,6 @@ class ConfirmationBulkDelete extends FormBase {
     // Redirect to the cats list page.
     $url = Url::fromUri('internal:/admin/structure/cats-list');
     $form_state->setRedirectUrl($url);
-    drupal_flush_all_caches();
   }
 
   // Ajax callback to cancel and redirect to the cats list page

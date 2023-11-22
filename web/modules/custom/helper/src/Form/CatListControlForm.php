@@ -197,7 +197,7 @@ class CatListControlForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Perform bulk deletion based on selected cats.
+    // Perform bulk deletion based on selected
     $selected_cats = $form_state->getValue('cats_admin');
 
     // Check if not all elements in $selected_cats are 0.
