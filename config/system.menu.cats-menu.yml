@@ -1,0 +1,8 @@
+uuid: 7573ad3a-d525-48c8-ad28-e80d647ee08d
+langcode: en
+status: true
+dependencies: {  }
+id: cats-menu
+label: 'Cats Menu'
+description: ''
+locked: false

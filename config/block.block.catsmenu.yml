@@ -1,0 +1,39 @@
+uuid: 55624b55-b26e-48ca-8421-57a0d5a590fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.cats-menu
+  module:
+    - system
+    - user
+  theme:
+    - cats
+id: catsmenu
+theme: cats
+region: primary_menu
+weight: -5
+provider: null
+plugin: 'system_menu_block:cats-menu'
+settings:
+  id: 'system_menu_block:cats-menu'
+  label: 'Cats Menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+      content_editor: content_editor
+      administrator: administrator
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/admin/structure/cats-list\r\n/user/*\r\n/helper/*"

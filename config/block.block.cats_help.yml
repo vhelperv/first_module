@@ -1,6 +1,6 @@
 uuid: e3530380-2a92-4242-962f-94faeca92092
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - help
@@ -11,7 +11,7 @@ _core:
 id: cats_help
 theme: cats
 region: header
-weight: 0
+weight: -3
 provider: null
 plugin: help_block
 settings:

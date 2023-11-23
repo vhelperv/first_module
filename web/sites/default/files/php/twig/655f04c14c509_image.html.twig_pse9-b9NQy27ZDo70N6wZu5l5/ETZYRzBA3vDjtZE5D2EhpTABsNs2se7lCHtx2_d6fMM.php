@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* core/themes/claro/templates/field/file-link.html.twig */
-class __TwigTemplate_53fe537c57458eee7031ab25c63f451e extends \Twig\Template
+/* core/themes/claro/templates/classy/field/image.html.twig */
+class __TwigTemplate_d0d2dcc0f13b21ba2f2222a9023b8c17 extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -35,23 +35,19 @@ class __TwigTemplate_53fe537c57458eee7031ab25c63f451e extends \Twig\Template
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 16
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->extensions['Drupal\Core\Template\TwigExtension']->attachLibrary("claro/classy.file"), "html", null, true);
-        echo "
-<span";
-        // line 17
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["attributes"] ?? null), 17, $this->source), "html", null, true);
-        echo ">";
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["link"] ?? null), 17, $this->source), "html", null, true);
-        echo " <span class=\"file__size\">(";
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["file_size"] ?? null), 17, $this->source), "html", null, true);
-        echo ")</span></span>
+        // line 14
+        $context["classes"] = [0 => ((        // line 15
+($context["style_name"] ?? null)) ? (("image-style-" . \Drupal\Component\Utility\Html::getClass($this->sandbox->ensureToStringAllowed(($context["style_name"] ?? null), 15, $this->source)))) : (""))];
+        // line 18
+        echo "<img";
+        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, ($context["attributes"] ?? null), "addClass", [0 => ($context["classes"] ?? null)], "method", false, false, true, 18), 18, $this->source), "html", null, true);
+        echo " />
 ";
     }
 
     public function getTemplateName()
     {
-        return "core/themes/claro/templates/field/file-link.html.twig";
+        return "core/themes/claro/templates/classy/field/image.html.twig";
     }
 
     public function isTraitable()
@@ -61,25 +57,25 @@ class __TwigTemplate_53fe537c57458eee7031ab25c63f451e extends \Twig\Template
 
     public function getDebugInfo()
     {
-        return array (  43 => 17,  39 => 16,);
+        return array (  42 => 18,  40 => 15,  39 => 14,);
     }
 
     public function getSourceContext()
     {
-        return new Source("", "core/themes/claro/templates/field/file-link.html.twig", "/var/www/web/core/themes/claro/templates/field/file-link.html.twig");
+        return new Source("", "core/themes/claro/templates/classy/field/image.html.twig", "/var/www/web/core/themes/claro/templates/classy/field/image.html.twig");
     }
     
     public function checkSecurity()
     {
-        static $tags = array();
-        static $filters = array("escape" => 16);
-        static $functions = array("attach_library" => 16);
+        static $tags = array("set" => 14);
+        static $filters = array("clean_class" => 15, "escape" => 18);
+        static $functions = array();
 
         try {
             $this->sandbox->checkSecurity(
-                [],
-                ['escape'],
-                ['attach_library']
+                ['set'],
+                ['clean_class', 'escape'],
+                []
             );
         } catch (SecurityError $e) {
             $e->setSourceContext($this->source);
