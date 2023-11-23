@@ -3,10 +3,14 @@
 namespace Drupal\helper\Form;
 
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\MessageCommand;
+use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\RedirectCommand;
+use Drupal\file\Entity\File;
 
 class FormEditCatInfo extends HelperFormGetCat {
 
@@ -20,7 +24,11 @@ class FormEditCatInfo extends HelperFormGetCat {
       '#type' => 'textfield',
       '#title' => $this->t('Your cat’s name:'),
       '#description' => $this->t('The name must be between 2 and 32 characters long.'),
-      '#default_value' => '',
+      '#suffix' => '<div id="name-field-wrapper" class="error"></div>',
+      '#ajax' => [
+        'callback' => '::validateName',
+        'event' => 'input',
+      ],
     ];
 
     // User email field with Ajax validation
@@ -28,13 +36,11 @@ class FormEditCatInfo extends HelperFormGetCat {
       '#type' => 'email',
       '#title' => $this->t('Your email:'),
       '#description' => $this->t('The email address can only contain Latin letters, the underscore character (_), or the hyphen character (-).'),
-      '#default_value' => '',
-      '#prefix' => '<div id="email-field-wrapper">',
-      '#suffix' => '</div>',
-      '#element_validate' => [[$this, 'validateForm']],
+      '#element_validate' => [[$this, 'submitForm']],
+      '#suffix' => '<div id="email-field-wrapper" class="error"></div><div id="email-field"></div>',
       '#ajax' => [
         'callback' => '::validateEmail',
-        'event' => 'input'
+        'event' => 'input',
       ],
     ];
 
@@ -93,11 +99,11 @@ class FormEditCatInfo extends HelperFormGetCat {
 
     return $form;
   }
-
-  // Validate form method
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
+  public function validateName(array &$form, FormStateInterface $form_state) : AjaxResponse {
+    return parent::validateName($form, $form_state);
   }
+  // Validate form method
+  public function validateForm(array &$form, FormStateInterface $form_state) {  }
 
   // Validate email method with Ajax response
   public function validateEmail(array &$form, FormStateInterface $form_state) : AjaxResponse {
@@ -106,21 +112,53 @@ class FormEditCatInfo extends HelperFormGetCat {
 
   // Submit method for updating cat information
   public function submitUpdate(array &$form, FormStateInterface $form_state) : AjaxResponse {
+    // Process form submission
     $values = $form_state->getValues();
-    $file_data = $values['cats_image'];
-    $file = \Drupal\file\Entity\File::load($file_data[0]);
-    $file->setPermanent();
-    $file->save();
-    $file_id = $file->id();
+    $catName = $values['cat_name'];
+    $userEmail = $values['user_email'];
+    $file_upload = $values['cats_image'];
+    $flag = TRUE;
 
-    // Get cat ID from route parameters
-    $route_match = \Drupal::routeMatch();
-    $route_parameters = $route_match->getParameters();
-    $id = $route_parameters->get('id');
+    // Validate cat name and user email
     $response = new AjaxResponse();
+    if (trim($catName) == '') {
+      $flag = FALSE;
+      $response->addCommand(new HtmlCommand('#name-field-wrapper', 'Please enter the cat`s nickname'));
+    } elseif (mb_strlen($values['cat_name'], 'UTF-8') < 2 || mb_strlen($catName, 'UTF-8') > 32) {
+      $flag = FALSE;
+    }
 
-    // Check for form errors
-    if (!$form_state->getErrors()) {
+    if (trim($userEmail) == '') {
+      $flag = FALSE;
+      $response->addCommand(new HtmlCommand('#email-field-wrapper', 'Please enter your email'));
+    } elseif (!preg_match('/^[a-zA-Z\-_@.]+$/', $userEmail)) {
+      $flag = FALSE;
+    } elseif (!str_contains($userEmail, '@')) {
+      $flag = FALSE;
+    } elseif (substr($userEmail, -1) === '@') {
+      $flag = FALSE;
+    }
+
+    // Validate file upload
+    if (empty($file_upload[0])) {
+      $flag = FALSE;
+      $response->addCommand(new RemoveCommand('#update-field-wrapper'));
+      $response->addCommand(new AppendCommand('.form-item--cats-image', '<div class="error" id="update-field-wrapper">Please add the cat`s image</div>'));
+    }
+
+    if ($flag === TRUE) {
+      // Get file data and save it
+      $file_data = $values['cats_image'];
+      $file = File::load($file_data[0]);
+      $file_id = $file->id();
+      $file->setPermanent();
+      $file->save();
+
+      // Get cat ID from route parameters
+      $route_match = \Drupal::routeMatch();
+      $route_parameters = $route_match->getParameters();
+      $id = $route_parameters->get('id');
+      $response = new AjaxResponse();
       // Update database with new cat information
       \Drupal::database()->update('helper')
         ->fields([
@@ -137,11 +175,14 @@ class FormEditCatInfo extends HelperFormGetCat {
       $response->addCommand($redirect_command);
 
       // Display success message
-      \Drupal::messenger()->addStatus(t('User Details Updated Successfully'));
-    } else {
-      // Display error message if form has errors
-      $response->addCommand(new MessageCommand("The entered data is not valid. Update declined", NULL, ['type' => 'error'], TRUE));
+      \Drupal::messenger()->addStatus('User Details Updated Successfully');
+
+      // Clear form field errors and messages
+      $response->addCommand(new HtmlCommand('#name-field-wrapper', ''));
+      $response->addCommand(new HtmlCommand('#email-field-wrapper', ''));
+      $response->addCommand(new RemoveCommand('#update-field-wrapper'));
     }
+
     return $response;
   }
 }
